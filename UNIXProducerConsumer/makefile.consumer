@@ -1,0 +1,25 @@
+CPP=g++49
+CPPLIBS=/opt/gcc49/lib
+CFLAGS=-c -Wall -std=c++11
+LDFLAGS=-L$(CPPLIBS) -lstdc++ -Wl,-rpath=$(CPPLIBS) -lpthread
+SOURCES=consumer.cpp error_codes.cpp error_codes.h format_error_message.cpp format_error_message.h file_io.cpp file_io.h
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=consumer
+
+#====================================================
+
+all: $(SOURCES) $(EXECUTABLE)
+
+build: clean $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CPP) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o:
+	$(CPP) $(CFLAGS) $< -o $@
+
+run: $(SOURCES).exe
+	./$(SOURCES).exe
+
+clean:
+	rm -f *.o *.exe

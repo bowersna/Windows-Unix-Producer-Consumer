@@ -1,0 +1,26 @@
+CPP=g++49
+CPPLIBS=/opt/gcc49/lib
+CFLAGS=-c -Wall -std=c++11
+LDFLAGS=-L$(CPPLIBS) -lstdc++ -Wl,-rpath=$(CPPLIBS) -lpthread
+SOURCES=producer.cpp create_consumer_process.cpp create_consumer_process.h error_codes.cpp error_codes.h format_error_message.cpp format_error_message.h file_io.cpp file_io.h producer_pipe_io.cpp producer_pipe_io.h
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=producer
+
+#====================================================
+
+all: $(SOURCES) $(EXECUTABLE)
+
+build: clean $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CPP) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o:
+	$(CPP) $(CFLAGS) $< -o $@
+
+run: $(SOURCES).exe
+	./$(SOURCES).exe
+
+clean:
+	rm -f *.o *.exe
+
